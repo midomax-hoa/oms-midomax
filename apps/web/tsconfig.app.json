@@ -1,11 +1,8 @@
 {
   "extends": "@workspace/config/tsconfig-react",
   "compilerOptions": {
-    "composite": true,
-    "outDir": "./dist",
     "baseUrl": ".",
-    "paths": { "@/*": ["./src/*"] },
-    "noEmit": false
+    "paths": { "@/*": ["./src/*"] }
   },
   "include": ["src"]
 }
