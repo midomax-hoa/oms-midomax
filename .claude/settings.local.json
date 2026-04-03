@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git tag:*)",
+      "Bash(git push:*)",
+      "Skill(ai-multimodal)",
+      "Bash(node /home/harris/Projects/oms-midomax/.claude/scripts/set-active-plan.cjs plans/260403-1233-oms-skeleton)"
+    ]
+  }
+}
