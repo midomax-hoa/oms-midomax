@@ -3,8 +3,11 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.prod
-    ports:
-      - "80:80"
+    expose:
+      - "80"
+    networks:
+      - dokploy-network
+      - default
     depends_on:
       - mock-api
 
@@ -13,5 +16,11 @@ services:
       context: .
       dockerfile: docker/Dockerfile.dev
     command: ["pnpm", "--filter", "@workspace/mock-api", "start"]
-    ports:
-      - "3001:3001"
+    expose:
+      - "3001"
+    networks:
+      - default
+
+networks:
+  dokploy-network:
+    external: true
