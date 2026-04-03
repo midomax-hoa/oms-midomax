@@ -8,7 +8,7 @@
 ## Overview
 
 - **Priority:** Critical
-- **Status:** Pending
+- **Status:** Complete
 - **Description:** Initialize Turbo + pnpm monorepo with root configs, workspace structure, and dotfiles.
 
 ## Key Insights
@@ -122,18 +122,18 @@ oms-midomax/
 
 ## Todo
 
-- [ ] git init
-- [ ] Root package.json
-- [ ] pnpm-workspace.yaml
-- [ ] turbo.json
-- [ ] .gitignore
-- [ ] .dockerignore
-- [ ] .env.example
-- [ ] .prettierrc
-- [ ] .nvmrc
-- [ ] Directory structure with .gitkeep
-- [ ] pnpm install
-- [ ] Verify `pnpm turbo --version` works
+- [x] git init
+- [x] Root package.json
+- [x] pnpm-workspace.yaml
+- [x] turbo.json
+- [x] .gitignore
+- [x] .dockerignore
+- [x] .env.example
+- [x] .prettierrc
+- [x] .nvmrc
+- [x] Directory structure with .gitkeep
+- [x] pnpm install
+- [x] Verify `pnpm turbo --version` works
 
 ## Success Criteria
 

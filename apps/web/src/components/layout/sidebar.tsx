@@ -1,7 +1,6 @@
 import { Link, useRouterState } from '@tanstack/react-router'
 import { icons, type LucideIcon } from 'lucide-react'
-import { Separator } from '@workspace/ui'
-import { APP_NAME, menuItems } from '@/lib/constants'
+import { menuItems } from '@/lib/constants'
 import type { MenuItem } from '@/types'
 
 function getIcon(name: string): LucideIcon {
@@ -13,8 +12,8 @@ function SidebarItem({ item, isActive }: { item: MenuItem; isActive: boolean }) 
 
   if (item.disabled) {
     return (
-      <div className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-400 cursor-not-allowed">
-        <Icon className="h-4 w-4" />
+      <div className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-muted-foreground/40 cursor-not-allowed select-none">
+        <Icon className="h-[18px] w-[18px]" />
         <span>{item.label}</span>
       </div>
     )
@@ -23,13 +22,13 @@ function SidebarItem({ item, isActive }: { item: MenuItem; isActive: boolean }) 
   return (
     <Link
       to={item.path}
-      className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
+      className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 cursor-pointer ${
         isActive
-          ? 'bg-[#2e3d95] text-white'
-          : 'text-gray-300 hover:bg-white/10'
+          ? 'bg-primary/10 text-primary border border-primary/20'
+          : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground border border-transparent'
       }`}
     >
-      <Icon className="h-4 w-4" />
+      <Icon className="h-[18px] w-[18px]" />
       <span>{item.label}</span>
     </Link>
   )
@@ -40,15 +39,14 @@ export function Sidebar() {
   const currentPath = routerState.location.pathname
 
   return (
-    <aside className="flex h-full w-64 flex-col bg-gray-900 text-white">
-      <div className="flex h-14 items-center px-4 font-bold text-lg">
-        {APP_NAME}
+    <aside className="flex h-full w-[260px] flex-col bg-card/50 border-r border-border/50">
+      <div className="flex h-20 items-center px-6">
+        <img src="/logo.svg" alt="Midomax" className="h-12 w-auto" />
       </div>
-      <Separator className="bg-gray-700" />
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
         {menuItems.map((group) => (
           <div key={group.group}>
-            <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground/60">
               {group.group}
             </p>
             <div className="space-y-1">
@@ -63,6 +61,9 @@ export function Sidebar() {
           </div>
         ))}
       </nav>
+      <div className="border-t border-border/50 px-5 py-3">
+        <p className="text-[11px] text-muted-foreground/50">v0.1.0</p>
+      </div>
     </aside>
   )
 }

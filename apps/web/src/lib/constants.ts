@@ -1,27 +1,27 @@
 import type { MenuGroup } from '@/types'
 
-export const APP_NAME = 'MiDoMax OMS'
+export const APP_NAME = 'Midomax OMS'
 
 export const menuItems: MenuGroup[] = [
   {
-    group: 'Tong Quan',
-    items: [{ label: 'Dashboard', path: '/', icon: 'LayoutDashboard' }],
+    group: 'Tổng Quan',
+    items: [{ label: 'Bảng điều khiển', path: '/', icon: 'LayoutDashboard' }],
   },
   {
-    group: 'Quan Ly',
+    group: 'Quản Lý',
     items: [
-      { label: 'Don hang', path: '/orders', icon: 'ShoppingCart' },
-      { label: 'San pham', path: '/products', icon: 'Package' },
-      { label: 'Kho hang', path: '/warehouse', icon: 'Warehouse', disabled: true },
-      { label: 'Khach hang', path: '/customers', icon: 'Users', disabled: true },
+      { label: 'Đơn hàng', path: '/orders', icon: 'ShoppingCart' },
+      { label: 'Sản phẩm', path: '/products', icon: 'Package' },
+      { label: 'Kho hàng', path: '/warehouse', icon: 'Warehouse', disabled: true },
+      { label: 'Khách hàng', path: '/customers', icon: 'Users', disabled: true },
     ],
   },
   {
-    group: 'Cai Dat',
+    group: 'Cài Đặt',
     items: [
-      { label: 'Cua hang', path: '/settings/store', icon: 'Store', disabled: true },
-      { label: 'Tai khoan', path: '/settings/account', icon: 'UserCog', disabled: true },
-      { label: 'He thong', path: '/settings/system', icon: 'Settings', disabled: true },
+      { label: 'Cửa hàng', path: '/settings/store', icon: 'Store', disabled: true },
+      { label: 'Tài khoản', path: '/settings/account', icon: 'UserCog', disabled: true },
+      { label: 'Hệ thống', path: '/settings/system', icon: 'Settings', disabled: true },
     ],
   },
 ]

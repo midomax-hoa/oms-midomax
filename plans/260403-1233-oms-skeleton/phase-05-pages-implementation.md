@@ -9,7 +9,7 @@
 ## Overview
 
 - **Priority:** High
-- **Status:** Pending
+- **Status:** Complete
 - **Description:** Implement 4 pages: Login, Dashboard, Order List, Product List with hardcoded data and shadcn/ui components.
 
 ## Key Design Rules
@@ -123,14 +123,14 @@ apps/web/src/components/
 
 ## Todo
 
-- [ ] Shared components (stat-card, page-header, status-badge, data-table-toolbar)
-- [ ] Login page (form + error handling)
-- [ ] Dashboard page (4 stat cards + recent orders)
-- [ ] Order List page (tabs + table + pagination + status badges)
-- [ ] Product List page (tabs + table + pagination + status badges)
-- [ ] Hardcoded data files (src/data/)
-- [ ] Theme integration (#2e3d95)
-- [ ] Visual review — all pages render correctly
+- [x] Shared components (stat-card, page-header, status-badge, data-table-toolbar)
+- [x] Login page (form + error handling)
+- [x] Dashboard page (4 stat cards + recent orders)
+- [x] Order List page (tabs + table + pagination + status badges)
+- [x] Product List page (tabs + table + pagination + status badges)
+- [x] Hardcoded data files (src/data/)
+- [x] Theme integration (#2e3d95)
+- [x] Visual review — all pages render correctly
 
 ## Success Criteria
 

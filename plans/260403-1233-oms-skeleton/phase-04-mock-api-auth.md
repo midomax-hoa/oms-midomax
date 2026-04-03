@@ -9,7 +9,7 @@
 ## Overview
 
 - **Priority:** High
-- **Status:** Pending
+- **Status:** Complete
 - **Description:** Set up json-server mock API with fake data, implement cookie-based auth flow.
 
 ## Files to Create

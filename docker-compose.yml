@@ -1,0 +1,25 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps:/app/apps
+      - ./packages:/app/packages
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:3001/api
+    depends_on:
+      - mock-api
+
+  mock-api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    command: ["pnpm", "--filter", "@workspace/mock-api", "dev"]
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./packages/mock-api:/app/packages/mock-api

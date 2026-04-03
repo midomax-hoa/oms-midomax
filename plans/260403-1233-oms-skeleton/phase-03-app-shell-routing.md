@@ -8,7 +8,7 @@
 ## Overview
 
 - **Priority:** Critical
-- **Status:** Pending
+- **Status:** Complete
 - **Description:** Create React+Vite app with TanStack Router, layout shell (top navbar + sidebar), and route structure.
 
 ## Key Insights

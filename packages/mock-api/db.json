@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@midomax.com",
+      "password": "admin123",
+      "name": "Admin",
+      "role": "admin"
+    }
+  ],
+  "orders": [
+    { "id": "ORD-260401-001", "customer": "Nguyen Van An", "email": "nguyenvanan@email.com", "items": [{ "name": "Tai nghe Bluetooth XM5", "qty": 1, "price": 8490000 }], "total": 8490000, "status": "delivered", "paymentMethod": "Credit Card", "shippingProvider": "GHN Express", "createdAt": "2026-04-01T08:30:00Z" },
+    { "id": "ORD-260401-002", "customer": "Tran Thi Bich", "email": "tranthibich@email.com", "items": [{ "name": "iPhone 16 Pro Max", "qty": 1, "price": 34990000 }], "total": 34990000, "status": "processing", "paymentMethod": "Bank Transfer", "shippingProvider": "GHTK", "createdAt": "2026-04-01T09:15:00Z" },
+    { "id": "ORD-260401-003", "customer": "Le Van Cuong", "email": "levancuong@email.com", "items": [{ "name": "MacBook Air M3", "qty": 1, "price": 27990000 }], "total": 27990000, "status": "shipped", "paymentMethod": "Momo", "shippingProvider": "VNPost", "createdAt": "2026-04-01T10:00:00Z" },
+    { "id": "ORD-260401-004", "customer": "Pham Thi Dung", "email": "phamthidung@email.com", "items": [{ "name": "Samsung Galaxy S24 Ultra", "qty": 1, "price": 31990000 }], "total": 31990000, "status": "cancelled", "paymentMethod": "COD", "shippingProvider": "J&T Express", "createdAt": "2026-04-01T11:20:00Z" },
+    { "id": "ORD-260401-005", "customer": "Hoang Van Em", "email": "hoangvanem@email.com", "items": [{ "name": "iPad Pro M4", "qty": 1, "price": 28990000 }, { "name": "Apple Pencil Pro", "qty": 1, "price": 3490000 }], "total": 32480000, "status": "pending", "paymentMethod": "Credit Card", "shippingProvider": "GHN Express", "createdAt": "2026-04-01T12:45:00Z" },
+    { "id": "ORD-260401-006", "customer": "Vo Thi Phuong", "email": "vothiphuong@email.com", "items": [{ "name": "Ao thun nam Polo", "qty": 3, "price": 350000 }], "total": 1050000, "status": "delivered", "paymentMethod": "Momo", "shippingProvider": "GHTK", "createdAt": "2026-04-01T13:30:00Z" },
+    { "id": "ORD-260401-007", "customer": "Nguyen Thanh Giang", "email": "nguyenthanhgiang@email.com", "items": [{ "name": "Dong ho Casio G-Shock", "qty": 1, "price": 3200000 }], "total": 3200000, "status": "processing", "paymentMethod": "Bank Transfer", "shippingProvider": "VNPost", "createdAt": "2026-04-01T14:10:00Z" },
+    { "id": "ORD-260401-008", "customer": "Bui Van Hai", "email": "buivanhai@email.com", "items": [{ "name": "Laptop Lenovo ThinkPad X1", "qty": 1, "price": 35990000 }], "total": 35990000, "status": "shipped", "paymentMethod": "Credit Card", "shippingProvider": "GHN Express", "createdAt": "2026-04-01T15:00:00Z" },
+    { "id": "ORD-260401-009", "customer": "Dang Thi Ich", "email": "dangthiich@email.com", "items": [{ "name": "Vay dam nu mua he", "qty": 2, "price": 450000 }], "total": 900000, "status": "delivered", "paymentMethod": "COD", "shippingProvider": "J&T Express", "createdAt": "2026-04-01T16:20:00Z" },
+    { "id": "ORD-260401-010", "customer": "Truong Van Khanh", "email": "truongvankhanh@email.com", "items": [{ "name": "AirPods Pro 2", "qty": 2, "price": 6790000 }], "total": 13580000, "status": "pending", "paymentMethod": "Momo", "shippingProvider": "GHTK", "createdAt": "2026-04-02T08:00:00Z" },
+    { "id": "ORD-260402-011", "customer": "Ly Thi Linh", "email": "lythilinh@email.com", "items": [{ "name": "Samsung Galaxy Tab S9", "qty": 1, "price": 19990000 }], "total": 19990000, "status": "processing", "paymentMethod": "Bank Transfer", "shippingProvider": "VNPost", "createdAt": "2026-04-02T09:30:00Z" },
+    { "id": "ORD-260402-012", "customer": "Ngo Van Minh", "email": "ngovanminh@email.com", "items": [{ "name": "Giay the thao Nike Air Max", "qty": 1, "price": 3890000 }], "total": 3890000, "status": "shipped", "paymentMethod": "Credit Card", "shippingProvider": "GHN Express", "createdAt": "2026-04-02T10:15:00Z" },
+    { "id": "ORD-260402-013", "customer": "Phan Thi Ngoc", "email": "phanthingoc@email.com", "items": [{ "name": "Balo laptop chong nuoc", "qty": 1, "price": 890000 }, { "name": "Chuot khong day Logitech", "qty": 1, "price": 650000 }], "total": 1540000, "status": "delivered", "paymentMethod": "COD", "shippingProvider": "J&T Express", "createdAt": "2026-04-02T11:00:00Z" },
+    { "id": "ORD-260402-014", "customer": "Do Van Phuc", "email": "dovanphuc@email.com", "items": [{ "name": "Apple Watch Ultra 2", "qty": 1, "price": 21990000 }], "total": 21990000, "status": "pending", "paymentMethod": "Momo", "shippingProvider": "GHTK", "createdAt": "2026-04-02T12:30:00Z" },
+    { "id": "ORD-260402-015", "customer": "Cao Thi Quyen", "email": "caothiquyen@email.com", "items": [{ "name": "Ao khoac jeans nu", "qty": 1, "price": 680000 }], "total": 680000, "status": "cancelled", "paymentMethod": "Bank Transfer", "shippingProvider": "VNPost", "createdAt": "2026-04-02T13:45:00Z" },
+    { "id": "ORD-260402-016", "customer": "Mai Van Rang", "email": "maivanrang@email.com", "items": [{ "name": "Loa Bluetooth JBL Charge 5", "qty": 1, "price": 3490000 }], "total": 3490000, "status": "delivered", "paymentMethod": "Credit Card", "shippingProvider": "GHN Express", "createdAt": "2026-04-02T14:30:00Z" },
+    { "id": "ORD-260402-017", "customer": "Vu Thi Sen", "email": "vuthisen@email.com", "items": [{ "name": "Quan jeans nam slim fit", "qty": 2, "price": 520000 }], "total": 1040000, "status": "processing", "paymentMethod": "COD", "shippingProvider": "J&T Express", "createdAt": "2026-04-02T15:15:00Z" },
+    { "id": "ORD-260403-018", "customer": "Dinh Van Toan", "email": "dinhvantoan@email.com", "items": [{ "name": "Xiaomi Redmi Note 13 Pro", "qty": 1, "price": 8490000 }], "total": 8490000, "status": "shipped", "paymentMethod": "Momo", "shippingProvider": "GHTK", "createdAt": "2026-04-03T08:00:00Z" },
+    { "id": "ORD-260403-019", "customer": "Luong Thi Uyen", "email": "luongthiuyen@email.com", "items": [{ "name": "Kinh mat thoi trang", "qty": 1, "price": 1290000 }, { "name": "Vi da nam cao cap", "qty": 1, "price": 890000 }], "total": 2180000, "status": "pending", "paymentMethod": "Bank Transfer", "shippingProvider": "VNPost", "createdAt": "2026-04-03T09:30:00Z" },
+    { "id": "ORD-260403-020", "customer": "Trinh Van Vu", "email": "trinhvanvu@email.com", "items": [{ "name": "Ban phim co Keychron K2", "qty": 1, "price": 2490000 }], "total": 2490000, "status": "processing", "paymentMethod": "Credit Card", "shippingProvider": "GHN Express", "createdAt": "2026-04-03T10:00:00Z" }
+  ],
+  "products": [
+    { "id": "PROD-001", "sku": "BT-XM5-BLK", "name": "Tai nghe Bluetooth XM5", "category": "Phu kien", "price": 8490000, "stock": 45, "status": "in_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-002", "sku": "IP-16PM-256", "name": "iPhone 16 Pro Max 256GB", "category": "Dien thoai", "price": 34990000, "stock": 12, "status": "in_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-003", "sku": "MB-AIR-M3", "name": "MacBook Air M3 15 inch", "category": "Laptop", "price": 27990000, "stock": 8, "status": "in_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-004", "sku": "SS-S24U-512", "name": "Samsung Galaxy S24 Ultra", "category": "Dien thoai", "price": 31990000, "stock": 3, "status": "low_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-005", "sku": "IP-PRO-M4", "name": "iPad Pro M4 11 inch", "category": "Tablet", "price": 28990000, "stock": 15, "status": "in_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-006", "sku": "AP-PEN-PRO", "name": "Apple Pencil Pro", "category": "Phu kien", "price": 3490000, "stock": 30, "status": "in_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-007", "sku": "CS-GSHK-01", "name": "Dong ho Casio G-Shock GA-2100", "category": "Dong ho", "price": 3200000, "stock": 20, "status": "in_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-008", "sku": "LN-X1C-G11", "name": "Laptop Lenovo ThinkPad X1 Carbon", "category": "Laptop", "price": 35990000, "stock": 5, "status": "low_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-009", "sku": "AP-APP2-USB", "name": "AirPods Pro 2 USB-C", "category": "Phu kien", "price": 6790000, "stock": 0, "status": "out_of_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-010", "sku": "SS-TABS9-WF", "name": "Samsung Galaxy Tab S9 WiFi", "category": "Tablet", "price": 19990000, "stock": 10, "status": "in_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-011", "sku": "AW-ULT2-49", "name": "Apple Watch Ultra 2 49mm", "category": "Dong ho", "price": 21990000, "stock": 7, "status": "in_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-012", "sku": "JBL-CHG5-BK", "name": "Loa Bluetooth JBL Charge 5", "category": "Phu kien", "price": 3490000, "stock": 25, "status": "in_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-013", "sku": "XM-RN13P-BL", "name": "Xiaomi Redmi Note 13 Pro", "category": "Dien thoai", "price": 8490000, "stock": 18, "status": "in_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-014", "sku": "KC-K2V2-RGB", "name": "Ban phim co Keychron K2 V2", "category": "Phu kien", "price": 2490000, "stock": 2, "status": "low_stock", "image": "/placeholder-product.svg" },
+    { "id": "PROD-015", "sku": "LG-MX-ANY", "name": "Chuot khong day Logitech MX Anywhere 3S", "category": "Phu kien", "price": 1890000, "stock": 35, "status": "in_stock", "image": "/placeholder-product.svg" }
+  ]
+}

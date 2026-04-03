@@ -43,12 +43,12 @@ Build skeleton management web app (React+Vite SPA) with Login, Dashboard, Order 
 
 | # | Phase | Status | Priority | Effort |
 |---|-------|--------|----------|--------|
-| 1 | [Monorepo Scaffold](phase-01-monorepo-scaffold.md) | pending | critical | medium |
-| 2 | [Shared Packages](phase-02-shared-packages.md) | pending | critical | medium |
-| 3 | [App Shell & Routing](phase-03-app-shell-routing.md) | pending | critical | medium |
-| 4 | [Mock API & Auth](phase-04-mock-api-auth.md) | pending | high | small |
-| 5 | [Pages Implementation](phase-05-pages-implementation.md) | pending | high | large |
-| 6 | [Docker & Deploy](phase-06-docker-deploy.md) | pending | high | medium |
+| 1 | [Monorepo Scaffold](phase-01-monorepo-scaffold.md) | complete | critical | medium |
+| 2 | [Shared Packages](phase-02-shared-packages.md) | complete | critical | medium |
+| 3 | [App Shell & Routing](phase-03-app-shell-routing.md) | complete | critical | medium |
+| 4 | [Mock API & Auth](phase-04-mock-api-auth.md) | complete | high | small |
+| 5 | [Pages Implementation](phase-05-pages-implementation.md) | complete | high | large |
+| 6 | [Docker & Deploy](phase-06-docker-deploy.md) | complete | high | medium |
 
 ## Dependencies
 
