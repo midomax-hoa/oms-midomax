@@ -5,7 +5,8 @@ interface ApiError extends Error {
 }
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const url = `${BASE_URL}${path}`;
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const url = `${BASE_URL.replace(/\/$/, '')}${normalizedPath}`;
   const response = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',

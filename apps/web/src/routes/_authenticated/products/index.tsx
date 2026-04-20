@@ -1,9 +1,11 @@
+// apps/web/src/routes/_authenticated/products/index.tsx
 import { useState, useMemo } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { Button, Input } from '@workspace/ui'
-import { Search, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Search, ChevronLeft, ChevronRight, ShoppingBag } from 'lucide-react'
 import { ProductTable, type Product } from '@/components/products/product-table'
 import type { ProductStatus } from '@/components/products/product-status-badge'
+import { ShopeeProductsTab } from '@/components/shopee/shopee-products-tab'
 
 export const Route = createFileRoute('/_authenticated/products/')({
   component: ProductsPage,
@@ -34,13 +36,14 @@ const PRODUCTS: Product[] = [
 
 const PAGE_SIZE = 10
 
-type TabKey = 'all' | ProductStatus
+type TabKey = 'all' | ProductStatus | 'shopee'
 
-const TABS: { key: TabKey; label: string; filter: (p: Product) => boolean }[] = [
+const TABS: { key: TabKey; label: string; filter?: (p: Product) => boolean; isShopee?: boolean }[] = [
   { key: 'all', label: 'Tất cả', filter: () => true },
   { key: 'in_stock', label: 'Còn hàng', filter: (p) => p.status === 'in_stock' },
   { key: 'low_stock', label: 'Sắp hết', filter: (p) => p.status === 'low_stock' },
   { key: 'out_of_stock', label: 'Hết hàng', filter: (p) => p.status === 'out_of_stock' },
+  { key: 'shopee', label: 'Shopee', isShopee: true },
 ]
 
 function ProductsPage() {
@@ -49,8 +52,9 @@ function ProductsPage() {
   const [page, setPage] = useState(1)
 
   const filtered = useMemo(() => {
+    if (activeTab === 'shopee') return []
     const tab = TABS.find((t) => t.key === activeTab)!
-    return PRODUCTS.filter(tab.filter).filter(
+    return PRODUCTS.filter(tab.filter!).filter(
       (p) =>
         p.name.toLowerCase().includes(search.toLowerCase()) ||
         p.sku.toLowerCase().includes(search.toLowerCase()),
@@ -62,7 +66,7 @@ function ProductsPage() {
   const paginated = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
 
   const tabCounts = useMemo(() => {
-    const counts: Record<TabKey, number> = { all: 0, in_stock: 0, low_stock: 0, out_of_stock: 0 }
+    const counts: Record<string, number> = { all: 0, in_stock: 0, low_stock: 0, out_of_stock: 0, shopee: 0 }
     for (const p of PRODUCTS) {
       counts.all++
       counts[p.status]++
@@ -82,60 +86,73 @@ function ProductsPage() {
           <button
             key={tab.key}
             onClick={() => { setActiveTab(tab.key); setPage(1) }}
-            className={`px-4 py-2.5 cursor-pointer text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1.5 px-4 py-2.5 cursor-pointer text-sm font-medium transition-colors ${
               activeTab === tab.key
-                ? 'border-b-2 border-primary text-primary'
-                : 'border-b-2 border-transparent text-muted-foreground hover:text-foreground'
+                ? tab.isShopee
+                  ? 'border-b-2 border-orange-400 text-orange-400'
+                  : 'border-b-2 border-primary text-primary'
+                : tab.isShopee
+                  ? 'border-b-2 border-transparent text-orange-400/60 hover:text-orange-400 ml-auto'
+                  : 'border-b-2 border-transparent text-muted-foreground hover:text-foreground'
             }`}
           >
+            {tab.isShopee && <ShoppingBag className="h-3.5 w-3.5" />}
             {tab.label}
-            <span className="ml-1.5 text-xs text-muted-foreground">({tabCounts[tab.key]})</span>
+            {!tab.isShopee && (
+              <span className="ml-1 text-xs text-muted-foreground">({tabCounts[tab.key] ?? 0})</span>
+            )}
           </button>
         ))}
       </div>
 
-      <div className="flex items-center gap-3">
-        <div className="relative max-w-sm flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Tìm theo tên, mã SKU..."
-            value={search}
-            onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-            className="pl-9 bg-card/50 border-border/50"
-          />
-        </div>
-      </div>
+      {activeTab === 'shopee' ? (
+        <ShopeeProductsTab />
+      ) : (
+        <>
+          <div className="flex items-center gap-3">
+            <div className="relative max-w-sm flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Tìm theo tên, mã SKU..."
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setPage(1) }}
+                className="pl-9 bg-card/50 border-border/50"
+              />
+            </div>
+          </div>
 
-      <ProductTable products={paginated} />
+          <ProductTable products={paginated} />
 
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
-          Hiển thị {paginated.length} / {filtered.length} sản phẩm
-        </p>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            disabled={currentPage <= 1}
-            onClick={() => setPage((p) => p - 1)}
-            className="border-border/50"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <span className="text-sm text-muted-foreground font-mono tabular-nums px-2">
-            {currentPage}/{totalPages}
-          </span>
-          <Button
-            variant="outline"
-            size="icon"
-            disabled={currentPage >= totalPages}
-            onClick={() => setPage((p) => p + 1)}
-            className="border-border/50"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-muted-foreground">
+              Hiển thị {paginated.length} / {filtered.length} sản phẩm
+            </p>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                disabled={currentPage <= 1}
+                onClick={() => setPage((p) => p - 1)}
+                className="border-border/50"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <span className="text-sm text-muted-foreground font-mono tabular-nums px-2">
+                {currentPage}/{totalPages}
+              </span>
+              <Button
+                variant="outline"
+                size="icon"
+                disabled={currentPage >= totalPages}
+                onClick={() => setPage((p) => p + 1)}
+                className="border-border/50"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }

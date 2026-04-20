@@ -1,5 +1,12 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "NODE_ENV",
+    "SHOPEE_PARTNER_ID",
+    "SHOPEE_PARTNER_KEY",
+    "SHOPEE_API_HOST",
+    "VITE_API_URL"
+  ],
   "tasks": {
     "build": {
       "outputs": ["dist/**"],

@@ -2,11 +2,13 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { TopNavbar } from '@/components/layout/top-navbar'
 import { Sidebar } from '@/components/layout/sidebar'
 
+import { api } from '@/lib/api'
+
 export const Route = createFileRoute('/_authenticated')({
   beforeLoad: async () => {
-    const baseUrl = import.meta.env.VITE_API_URL || '/api'
-    const response = await fetch(`${baseUrl}/me`, { credentials: 'include' })
-    if (!response.ok) {
+    try {
+      await api.get('/me')
+    } catch {
       throw redirect({ to: '/login' })
     }
   },

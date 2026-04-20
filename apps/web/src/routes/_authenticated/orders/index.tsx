@@ -1,13 +1,15 @@
+// apps/web/src/routes/_authenticated/orders/index.tsx
 import { useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { Button, Card, CardContent, Input } from '@workspace/ui'
-import { Search, ChevronLeft, ChevronRight, Download } from 'lucide-react'
+import { Search, ChevronLeft, ChevronRight, Download, ShoppingBag } from 'lucide-react'
 import { OrderTable, type Order } from '@/components/orders/order-table'
 import type { OrderStatus } from '@/components/orders/order-status-badge'
+import { ShopeeOrdersTab } from '@/components/shopee/shopee-orders-tab'
 
-export const Route = createFileRoute('/_authenticated/orders/')({
+export const Route = createFileRoute('/_authenticated/orders/')(({
   component: OrdersPage,
-})
+}))
 
 const ITEMS_PER_PAGE = 25
 
@@ -39,19 +41,21 @@ const orders: Order[] = [
   { id: 'DH025', date: '2026-03-22', customer: 'Quách Văn Đạt', total: 2250000, status: 'hoan_thanh', payment: 'Chuyển khoản', shipping: 'Giao hàng tiết kiệm' },
 ]
 
-type TabKey = 'tat_ca' | OrderStatus
+type TabKey = 'tat_ca' | OrderStatus | 'shopee'
 
-const tabs: { key: TabKey; label: string }[] = [
+const tabs: { key: TabKey; label: string; isShopee?: boolean }[] = [
   { key: 'tat_ca', label: 'Tất cả' },
   { key: 'cho_xac_nhan', label: 'Chờ xác nhận' },
   { key: 'dang_xu_ly', label: 'Đang xử lý' },
   { key: 'dang_giao', label: 'Đang giao' },
   { key: 'hoan_thanh', label: 'Hoàn thành' },
   { key: 'da_huy', label: 'Đã hủy' },
+  { key: 'shopee', label: 'Shopee', isShopee: true },
 ]
 
 function getCountByStatus(status: TabKey): number {
   if (status === 'tat_ca') return orders.length
+  if (status === 'shopee') return 0
   return orders.filter((o) => o.status === status).length
 }
 
@@ -61,7 +65,7 @@ function OrdersPage() {
   const [page, setPage] = useState(1)
 
   const filtered = orders.filter((o) => {
-    const matchesTab = activeTab === 'tat_ca' || o.status === activeTab
+    const matchesTab = activeTab === 'tat_ca' || activeTab === 'shopee' || o.status === activeTab
     const matchesSearch =
       !search ||
       o.id.toLowerCase().includes(search.toLowerCase()) ||
@@ -88,68 +92,81 @@ function OrdersPage() {
           <button
             key={tab.key}
             onClick={() => { setActiveTab(tab.key); setPage(1) }}
-            className={`px-4 py-2.5 cursor-pointer text-sm font-medium transition-colors ${
+            className={`flex items-center gap-1.5 px-4 py-2.5 cursor-pointer text-sm font-medium transition-colors ${
               activeTab === tab.key
-                ? 'border-b-2 border-primary text-primary'
-                : 'border-b-2 border-transparent text-muted-foreground hover:text-foreground'
+                ? tab.isShopee
+                  ? 'border-b-2 border-orange-400 text-orange-400'
+                  : 'border-b-2 border-primary text-primary'
+                : tab.isShopee
+                  ? 'border-b-2 border-transparent text-orange-400/60 hover:text-orange-400 ml-auto'
+                  : 'border-b-2 border-transparent text-muted-foreground hover:text-foreground'
             }`}
           >
+            {tab.isShopee && <ShoppingBag className="h-3.5 w-3.5" />}
             {tab.label}
-            <span className="ml-1.5 text-xs text-muted-foreground">({getCountByStatus(tab.key)})</span>
+            {!tab.isShopee && (
+              <span className="text-xs text-muted-foreground">({getCountByStatus(tab.key)})</span>
+            )}
           </button>
         ))}
       </div>
 
-      <div className="flex items-center gap-3">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Tìm theo mã đơn, khách hàng..."
-            value={search}
-            onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-            className="pl-9 bg-card/50 border-border/50"
-          />
-        </div>
-        <Button variant="outline" className="cursor-pointer border-border/50">
-          <Download className="h-4 w-4" />
-          Xuất Excel
-        </Button>
-      </div>
+      {activeTab === 'shopee' ? (
+        <ShopeeOrdersTab />
+      ) : (
+        <>
+          <div className="flex items-center gap-3">
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Tìm theo mã đơn, khách hàng..."
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setPage(1) }}
+                className="pl-9 bg-card/50 border-border/50"
+              />
+            </div>
+            <Button variant="outline" className="cursor-pointer border-border/50">
+              <Download className="h-4 w-4" />
+              Xuất Excel
+            </Button>
+          </div>
 
-      <Card className="border-border/50 bg-card/80 overflow-hidden">
-        <CardContent className="p-0">
-          <OrderTable orders={paginated} />
-        </CardContent>
-      </Card>
+          <Card className="border-border/50 bg-card/80 overflow-hidden">
+            <CardContent className="p-0">
+              <OrderTable orders={paginated} />
+            </CardContent>
+          </Card>
 
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
-          Hiển thị {paginated.length} / {filtered.length} đơn hàng
-        </p>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={currentPage <= 1}
-            onClick={() => setPage((p) => p - 1)}
-            className="border-border/50"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <span className="text-sm text-muted-foreground font-mono tabular-nums px-2">
-            {currentPage}/{totalPages}
-          </span>
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={currentPage >= totalPages}
-            onClick={() => setPage((p) => p + 1)}
-            className="border-border/50"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-muted-foreground">
+              Hiển thị {paginated.length} / {filtered.length} đơn hàng
+            </p>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={currentPage <= 1}
+                onClick={() => setPage((p) => p - 1)}
+                className="border-border/50"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <span className="text-sm text-muted-foreground font-mono tabular-nums px-2">
+                {currentPage}/{totalPages}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={currentPage >= totalPages}
+                onClick={() => setPage((p) => p + 1)}
+                className="border-border/50"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
