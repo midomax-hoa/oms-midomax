@@ -6,6 +6,7 @@ import { Search, ChevronLeft, ChevronRight, Download, ShoppingBag } from 'lucide
 import { OrderTable, type Order } from '@/components/orders/order-table'
 import type { OrderStatus } from '@/components/orders/order-status-badge'
 import { ShopeeOrdersTab } from '@/components/shopee/shopee-orders-tab'
+import { LazadaOrdersTab } from '@/components/lazada/lazada-orders-tab'
 
 export const Route = createFileRoute('/_authenticated/orders/')(({
   component: OrdersPage,
@@ -41,9 +42,9 @@ const orders: Order[] = [
   { id: 'DH025', date: '2026-03-22', customer: 'Quách Văn Đạt', total: 2250000, status: 'hoan_thanh', payment: 'Chuyển khoản', shipping: 'Giao hàng tiết kiệm' },
 ]
 
-type TabKey = 'tat_ca' | OrderStatus | 'shopee'
+type TabKey = 'tat_ca' | OrderStatus | 'shopee' | 'lazada'
 
-const tabs: { key: TabKey; label: string; isShopee?: boolean }[] = [
+const tabs: { key: TabKey; label: string; isShopee?: boolean; isLazada?: boolean }[] = [
   { key: 'tat_ca', label: 'Tất cả' },
   { key: 'cho_xac_nhan', label: 'Chờ xác nhận' },
   { key: 'dang_xu_ly', label: 'Đang xử lý' },
@@ -51,11 +52,12 @@ const tabs: { key: TabKey; label: string; isShopee?: boolean }[] = [
   { key: 'hoan_thanh', label: 'Hoàn thành' },
   { key: 'da_huy', label: 'Đã hủy' },
   { key: 'shopee', label: 'Shopee', isShopee: true },
+  { key: 'lazada', label: 'Lazada', isLazada: true },
 ]
 
 function getCountByStatus(status: TabKey): number {
   if (status === 'tat_ca') return orders.length
-  if (status === 'shopee') return 0
+  if (status === 'shopee' || status === 'lazada') return 0
   return orders.filter((o) => o.status === status).length
 }
 
@@ -65,7 +67,7 @@ function OrdersPage() {
   const [page, setPage] = useState(1)
 
   const filtered = orders.filter((o) => {
-    const matchesTab = activeTab === 'tat_ca' || activeTab === 'shopee' || o.status === activeTab
+    const matchesTab = activeTab === 'tat_ca' || activeTab === 'shopee' || activeTab === 'lazada' || o.status === activeTab
     const matchesSearch =
       !search ||
       o.id.toLowerCase().includes(search.toLowerCase()) ||
@@ -96,15 +98,19 @@ function OrdersPage() {
               activeTab === tab.key
                 ? tab.isShopee
                   ? 'border-b-2 border-orange-400 text-orange-400'
-                  : 'border-b-2 border-primary text-primary'
+                  : tab.isLazada
+                    ? 'border-b-2 border-blue-400 text-blue-400'
+                    : 'border-b-2 border-primary text-primary'
                 : tab.isShopee
                   ? 'border-b-2 border-transparent text-orange-400/60 hover:text-orange-400 ml-auto'
-                  : 'border-b-2 border-transparent text-muted-foreground hover:text-foreground'
+                  : tab.isLazada
+                    ? 'border-b-2 border-transparent text-blue-400/60 hover:text-blue-400'
+                    : 'border-b-2 border-transparent text-muted-foreground hover:text-foreground'
             }`}
           >
-            {tab.isShopee && <ShoppingBag className="h-3.5 w-3.5" />}
+            {(tab.isShopee || tab.isLazada) && <ShoppingBag className={`h-3.5 w-3.5 ${tab.isLazada ? 'text-blue-400' : ''}`} />}
             {tab.label}
-            {!tab.isShopee && (
+            {!tab.isShopee && !tab.isLazada && (
               <span className="text-xs text-muted-foreground">({getCountByStatus(tab.key)})</span>
             )}
           </button>
@@ -113,6 +119,8 @@ function OrdersPage() {
 
       {activeTab === 'shopee' ? (
         <ShopeeOrdersTab />
+      ) : activeTab === 'lazada' ? (
+        <LazadaOrdersTab />
       ) : (
         <>
           <div className="flex items-center gap-3">

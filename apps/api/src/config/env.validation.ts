@@ -19,6 +19,26 @@ export class EnvironmentVariables {
   @IsString()
   SHOPEE_FRONTEND_URL: string;
 
+  @IsString()
+  @IsOptional()
+  LAZADA_APP_KEY: string;
+
+  @IsString()
+  @IsOptional()
+  LAZADA_APP_SECRET: string;
+
+  @IsString()
+  @IsOptional()
+  LAZADA_API_HOST: string;
+
+  @IsString()
+  @IsOptional()
+  LAZADA_REDIRECT_URL: string;
+
+  @IsString()
+  @IsOptional()
+  LAZADA_FRONTEND_URL: string;
+
   @Transform(({ value }: { value: string }) => parseInt(value, 10))
   @IsNumber()
   @IsOptional()

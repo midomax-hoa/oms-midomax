@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { validate } from './config/env.validation';
 import { ShopeeModule } from './shopee/shopee.module';
+import { LazadaModule } from './lazada/lazada.module';
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 
@@ -14,6 +15,7 @@ import { ProductsModule } from './products/products.module';
       validate,
     }),
     ShopeeModule,
+    LazadaModule,
     OrdersModule,
     ProductsModule,
   ],

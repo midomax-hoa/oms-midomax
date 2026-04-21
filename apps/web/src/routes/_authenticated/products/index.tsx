@@ -6,6 +6,7 @@ import { Search, ChevronLeft, ChevronRight, ShoppingBag } from 'lucide-react'
 import { ProductTable, type Product } from '@/components/products/product-table'
 import type { ProductStatus } from '@/components/products/product-status-badge'
 import { ShopeeProductsTab } from '@/components/shopee/shopee-products-tab'
+import { LazadaProductsTab } from '@/components/lazada/lazada-products-tab'
 
 export const Route = createFileRoute('/_authenticated/products/')({
   component: ProductsPage,
@@ -36,14 +37,15 @@ const PRODUCTS: Product[] = [
 
 const PAGE_SIZE = 10
 
-type TabKey = 'all' | ProductStatus | 'shopee'
+type TabKey = 'all' | ProductStatus | 'shopee' | 'lazada'
 
-const TABS: { key: TabKey; label: string; filter?: (p: Product) => boolean; isShopee?: boolean }[] = [
+const TABS: { key: TabKey; label: string; filter?: (p: Product) => boolean; isShopee?: boolean; isLazada?: boolean }[] = [
   { key: 'all', label: 'Tất cả', filter: () => true },
   { key: 'in_stock', label: 'Còn hàng', filter: (p) => p.status === 'in_stock' },
   { key: 'low_stock', label: 'Sắp hết', filter: (p) => p.status === 'low_stock' },
   { key: 'out_of_stock', label: 'Hết hàng', filter: (p) => p.status === 'out_of_stock' },
   { key: 'shopee', label: 'Shopee', isShopee: true },
+  { key: 'lazada', label: 'Lazada', isLazada: true },
 ]
 
 function ProductsPage() {
@@ -52,7 +54,7 @@ function ProductsPage() {
   const [page, setPage] = useState(1)
 
   const filtered = useMemo(() => {
-    if (activeTab === 'shopee') return []
+    if (activeTab === 'shopee' || activeTab === 'lazada') return []
     const tab = TABS.find((t) => t.key === activeTab)!
     return PRODUCTS.filter(tab.filter!).filter(
       (p) =>
@@ -66,7 +68,7 @@ function ProductsPage() {
   const paginated = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
 
   const tabCounts = useMemo(() => {
-    const counts: Record<string, number> = { all: 0, in_stock: 0, low_stock: 0, out_of_stock: 0, shopee: 0 }
+    const counts: Record<string, number> = { all: 0, in_stock: 0, low_stock: 0, out_of_stock: 0, shopee: 0, lazada: 0 }
     for (const p of PRODUCTS) {
       counts.all++
       counts[p.status]++
@@ -90,15 +92,19 @@ function ProductsPage() {
               activeTab === tab.key
                 ? tab.isShopee
                   ? 'border-b-2 border-orange-400 text-orange-400'
-                  : 'border-b-2 border-primary text-primary'
+                  : tab.isLazada
+                    ? 'border-b-2 border-blue-400 text-blue-400'
+                    : 'border-b-2 border-primary text-primary'
                 : tab.isShopee
                   ? 'border-b-2 border-transparent text-orange-400/60 hover:text-orange-400 ml-auto'
-                  : 'border-b-2 border-transparent text-muted-foreground hover:text-foreground'
+                  : tab.isLazada
+                    ? 'border-b-2 border-transparent text-blue-400/60 hover:text-blue-400'
+                    : 'border-b-2 border-transparent text-muted-foreground hover:text-foreground'
             }`}
           >
-            {tab.isShopee && <ShoppingBag className="h-3.5 w-3.5" />}
+            {(tab.isShopee || tab.isLazada) && <ShoppingBag className={`h-3.5 w-3.5 ${tab.isLazada ? 'text-blue-400' : ''}`} />}
             {tab.label}
-            {!tab.isShopee && (
+            {!tab.isShopee && !tab.isLazada && (
               <span className="ml-1 text-xs text-muted-foreground">({tabCounts[tab.key] ?? 0})</span>
             )}
           </button>
@@ -107,6 +113,8 @@ function ProductsPage() {
 
       {activeTab === 'shopee' ? (
         <ShopeeProductsTab />
+      ) : activeTab === 'lazada' ? (
+        <LazadaProductsTab />
       ) : (
         <>
           <div className="flex items-center gap-3">
