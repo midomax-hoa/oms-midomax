@@ -51,6 +51,7 @@ export class EnvironmentVariables {
 }
 
 export function validate(config: Record<string, unknown>): EnvironmentVariables {
+  console.log('Validating environment variables...');
   const validatedConfig = plainToInstance(EnvironmentVariables, config, {
     enableImplicitConversion: true,
   });
@@ -58,8 +59,10 @@ export function validate(config: Record<string, unknown>): EnvironmentVariables 
   const errors = validateSync(validatedConfig, { skipMissingProperties: false });
 
   if (errors.length > 0) {
+    console.error('Environment validation errors detected:', JSON.stringify(errors, null, 2));
     throw new Error(`Environment validation failed:\n${errors.toString()}`);
   }
 
+  console.log('Environment validation successful.');
   return validatedConfig;
 }
