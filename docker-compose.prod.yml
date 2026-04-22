@@ -6,6 +6,7 @@ services:
       args:
         - VITE_API_URL=${VITE_API_URL}
         - VITE_SHOPEE_API_URL=${VITE_SHOPEE_API_URL}
+    restart: always
     expose:
       - "80"
     networks:
@@ -16,6 +17,7 @@ services:
       - mock-api
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=dokploy-network"
       - "traefik.http.routers.midomax-oms-web.rule=Host(`${DOMAIN}`)"
       - "traefik.http.routers.midomax-oms-web.entrypoints=websecure"
       - "traefik.http.routers.midomax-oms-web.tls.certresolver=letsencrypt"
@@ -26,6 +28,7 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.api.prod
+    restart: always
     expose:
       - "3002"
     environment:
@@ -48,6 +51,7 @@ services:
       - mock-api
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=dokploy-network"
       - "traefik.http.routers.midomax-oms-api.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
       - "traefik.http.routers.midomax-oms-api.entrypoints=websecure"
       - "traefik.http.routers.midomax-oms-api.tls.certresolver=letsencrypt"

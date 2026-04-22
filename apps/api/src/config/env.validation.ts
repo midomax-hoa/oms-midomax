@@ -3,7 +3,7 @@ import { plainToInstance, Transform } from 'class-transformer';
 import { IsNumber, IsString, IsOptional, validateSync } from 'class-validator';
 
 export class EnvironmentVariables {
-  @Transform(({ value }: { value: string }) => parseInt(value, 10))
+  @Transform(({ value }) => (value === '' ? undefined : parseInt(value, 10)))
   @IsNumber()
   @IsOptional()
   SHOPEE_PARTNER_ID: number = 0;
@@ -44,7 +44,7 @@ export class EnvironmentVariables {
   @IsOptional()
   LAZADA_FRONTEND_URL: string;
 
-  @Transform(({ value }: { value: string }) => parseInt(value, 10))
+  @Transform(({ value }) => (value === '' ? undefined : parseInt(value, 10)))
   @IsNumber()
   @IsOptional()
   API_PORT: number = 3002;
