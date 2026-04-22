@@ -5,19 +5,24 @@ import { IsNumber, IsString, IsOptional, validateSync } from 'class-validator';
 export class EnvironmentVariables {
   @Transform(({ value }: { value: string }) => parseInt(value, 10))
   @IsNumber()
-  SHOPEE_PARTNER_ID: number;
+  @IsOptional()
+  SHOPEE_PARTNER_ID: number = 0;
 
   @IsString()
-  SHOPEE_PARTNER_KEY: string;
+  @IsOptional()
+  SHOPEE_PARTNER_KEY: string = '';
 
   @IsString()
-  SHOPEE_API_HOST: string;
+  @IsOptional()
+  SHOPEE_API_HOST: string = 'https://partner.test-stable.shopeemobile.com';
 
   @IsString()
-  SHOPEE_REDIRECT_URL: string;
+  @IsOptional()
+  SHOPEE_REDIRECT_URL: string = '';
 
   @IsString()
-  SHOPEE_FRONTEND_URL: string;
+  @IsOptional()
+  SHOPEE_FRONTEND_URL: string = '';
 
   @IsString()
   @IsOptional()
