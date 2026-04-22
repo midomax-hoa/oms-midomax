@@ -3,13 +3,56 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.prod
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+        - VITE_SHOPEE_API_URL=${VITE_SHOPEE_API_URL}
     expose:
       - "80"
     networks:
       - dokploy-network
-      - default
+      - oms-internal
+    depends_on:
+      - api
+      - mock-api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.midomax-oms-web.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.midomax-oms-web.entrypoints=websecure"
+      - "traefik.http.routers.midomax-oms-web.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.midomax-oms-web.priority=1"
+      - "traefik.http.services.midomax-oms-web-svc.loadbalancer.server.port=80"
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api.prod
+    expose:
+      - "3002"
+    environment:
+      - NODE_ENV=production
+      - SHOPEE_PARTNER_ID=${SHOPEE_PARTNER_ID}
+      - SHOPEE_PARTNER_KEY=${SHOPEE_PARTNER_KEY}
+      - SHOPEE_API_HOST=${SHOPEE_API_HOST}
+      - SHOPEE_REDIRECT_URL=${SHOPEE_REDIRECT_URL}
+      - SHOPEE_FRONTEND_URL=${SHOPEE_FRONTEND_URL}
+      - LAZADA_APP_KEY=${LAZADA_APP_KEY}
+      - LAZADA_APP_SECRET=${LAZADA_APP_SECRET}
+      - LAZADA_API_HOST=${LAZADA_API_HOST}
+      - LAZADA_REDIRECT_URL=${LAZADA_REDIRECT_URL}
+      - LAZADA_FRONTEND_URL=${LAZADA_FRONTEND_URL}
+      - API_PORT=${API_PORT:-3002}
+    networks:
+      - dokploy-network
+      - oms-internal
     depends_on:
       - mock-api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.midomax-oms-api.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.midomax-oms-api.entrypoints=websecure"
+      - "traefik.http.routers.midomax-oms-api.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.midomax-oms-api.priority=10"
+      - "traefik.http.services.midomax-oms-api-svc.loadbalancer.server.port=3002"
 
   mock-api:
     build:
@@ -19,8 +62,11 @@ services:
     expose:
       - "3001"
     networks:
-      - default
+      - oms-internal
 
 networks:
   dokploy-network:
     external: true
+  oms-internal:
+    driver: bridge
+

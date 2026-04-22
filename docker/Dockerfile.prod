@@ -15,13 +15,16 @@ RUN pnpm install --frozen-lockfile
 # Stage 2: Build the application
 FROM node:22-alpine AS build
 
+ARG VITE_API_URL
+ARG VITE_SHOPEE_API_URL
+
 RUN corepack enable pnpm
 WORKDIR /app
 
 COPY --from=deps /app ./
 COPY . .
 
-RUN pnpm turbo run build --filter=web
+RUN VITE_API_URL=$VITE_API_URL VITE_SHOPEE_API_URL=$VITE_SHOPEE_API_URL pnpm turbo run build --filter=web
 
 # Stage 3: Serve with nginx
 FROM nginx:alpine AS runner

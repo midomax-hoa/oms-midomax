@@ -5,10 +5,17 @@ import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 import path from 'path'
 
 export default defineConfig({
+  envDir: '../../',
   plugins: [TanStackRouterVite({ autoCodeSplitting: true }), react(), tailwindcss()],
   resolve: { alias: { '@': path.resolve(__dirname, './src') } },
   server: {
     port: 3000,
-    proxy: { '/api': 'http://localhost:3001' },
+    proxy: {
+      '/api/shopee': {
+        target: 'http://localhost:3002',
+        changeOrigin: true,
+      },
+      '/api': 'http://localhost:3001',
+    },
   },
 })
