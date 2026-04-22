@@ -3,7 +3,7 @@ import * as crypto from 'crypto';
 
 /**
  * Public signature — used for:
- * - Auth link generation (/api/v1/shop/auth_partner)
+ * - Auth link generation (/api/v2/shop/auth_partner)
  * - Token exchange (/api/v2/auth/token/get)
  * - Token refresh (/api/v2/auth/access_token/get)
  *

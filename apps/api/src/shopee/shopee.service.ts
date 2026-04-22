@@ -109,7 +109,7 @@ export class ShopeeService {
   // ── Auth ───────────────────────────────────────────────────────────────────
 
   generateAuthLink(): string {
-    const path = '/api/v1/shop/auth_partner';
+    const path = '/api/v2/shop/auth_partner';
     const timestamp = Math.floor(Date.now() / 1000);
     const sign = signPublic(this.partnerKey, this.partnerId, path, timestamp);
 
