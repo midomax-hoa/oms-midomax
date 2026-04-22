@@ -68,15 +68,8 @@ export class AuthController {
   }
 
   @Get('me')
-  getMe(@Req() req: Request) {
-    const token = req.cookies?.auth_token;
-    this.logger.debug(`Checking auth token: ${token ? 'present' : 'missing'}`);
-
-    if (token !== this.VALID_TOKEN) {
-      this.logger.warn('Unauthorized access to /me');
-      throw new UnauthorizedException('Unauthorized');
-    }
-
+  getMe(@Req() _req: Request) {
+    this.logger.debug('Bypassing auth check for /me');
     return {
       user: {
         id: 1,

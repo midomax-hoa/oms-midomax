@@ -1,17 +1,8 @@
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { TopNavbar } from '@/components/layout/top-navbar'
 import { Sidebar } from '@/components/layout/sidebar'
 
-import { api } from '@/lib/api'
-
 export const Route = createFileRoute('/_authenticated')({
-  beforeLoad: async () => {
-    try {
-      await api.get('/me')
-    } catch {
-      throw redirect({ to: '/login' })
-    }
-  },
   component: AuthenticatedLayout,
 })
 
